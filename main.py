@@ -145,8 +145,6 @@ if __name__ == '__main__':
 		# draw center point of contour
 		cv2.circle( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, 7, ( 255, 255, 255 ), -1)
 
-		print( f'\n\n\n\n circleContourObj.xAxisEndPointTuple {circleContourObj.xAxisEndPointTuple}, circleContourObj.yAxisEndPointTuple {circleContourObj.yAxisEndPointTuple}' )
-
 		# draw x-axis line of coordinate frame
 		cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
 
@@ -167,6 +165,9 @@ if __name__ == '__main__':
 
 		# draw center point of contour
 		cv2.circle( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, 7, ( 255, 255, 255 ), -1)
+
+		# draw x-axis line of coordinate frame
+		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
 
 	# add original image with outer most triangle contour to figure
 	imagePlotter.addImageToPlot( originalImageForDrawOuterMostTriangleContour, 'outer most triangle contour' )
