@@ -28,7 +28,7 @@ from contour_manipulation import Contour, ContourStorage
 if __name__ == '__main__':
 
 	# create image plotter object
-	imagePlotter = ImagePlotter( 7, 7, 2 )
+	imagePlotter = ImagePlotter( 7, 7, 2, '/home/happymix/module89_chat/resultImageStorage' )
 
 	# reading image
 	originalImage = cv2.imread( 'field_image_from_manual.png' )

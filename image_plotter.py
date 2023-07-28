@@ -17,16 +17,27 @@ class Image:
 	''' - store information about image
 	'''
 
-	def __init__( self, image, imageNameStr ):
+	def __init__( self, image, imageNameStr, imageStorageDirStr ):
 		self.image = image
 		self.rgbImage = cv2.cvtColor( self.image, cv2.COLOR_BGR2RGB )
 		self.imageNameStr = imageNameStr
+		self.pathToSaveImageStr = imageStorageDirStr + '/' + self.imageNameStr.replace( ' ', '_' ) + '.jpg'
+
+	def saveImage( self ):
+		''' save image to path
+		'''
+
+		print( f'\n\n\n image saved at { self.pathToSaveImageStr }' )
+
+		# save image 
+		cv2.imwrite( self.pathToSaveImageStr, self.image )
+
 
 class ImagePlotter:
 	''' - used to dynamically create image plot using matplotlib
 	'''
 
-	def __init__( self, widthPerImageInch, heightPerImageInInch, numberOfColumn ):
+	def __init__( self, widthPerImageInch, heightPerImageInInch, numberOfColumn, imageStorageDirStr ):
 		
 		# matplotlib pyplot
 		self.plt  = plt
@@ -55,12 +66,15 @@ class ImagePlotter:
 		# figure 
 		self.figure = None
 
+		# image storage dir string name
+		self.imageStorageDirStr = imageStorageDirStr
+
 	def addImageToPlot( self, image, imageNameStr ):
 		''' - add image to be plotted
 		'''
 
 		# create image object
-		imageObj = Image( image, imageNameStr )
+		imageObj = Image( image, imageNameStr, self.imageStorageDirStr )
 
 		# store image object
 		self.imageObjStorageList.append( imageObj )
@@ -95,6 +109,9 @@ class ImagePlotter:
 
 			# set image title
 			self.plt.title( imageObj.imageNameStr )
+
+			# save image 
+			imageObj.saveImage()
 		
 		# show figure
 		plt.show()
