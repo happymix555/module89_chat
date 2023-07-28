@@ -386,6 +386,8 @@ class Contour:
 
 			print( f'\n\n\n\n [calculateCoordinateFrame] self.xAxisEndPointTuple { self.xAxisEndPointTuple }, self.yAxisEndPointTuple { self.yAxisEndPointTuple }' )
 
+			return
+
 		# this contour is triangle or square contour, then
 		# approximate polygon of contour
 		approximatedPolygon = self.approximatePolygonOfContour( self.latestEpsilonPercent )
