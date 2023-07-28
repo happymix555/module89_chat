@@ -13,6 +13,11 @@ from matplotlib import pyplot as plt
 # mathematical operation
 import math
 
+# argument parser
+import argparse
+
+import os
+
 #####################################################################################################
 #
 # Local Import
@@ -27,8 +32,16 @@ from contour_manipulation import Contour, ContourStorage
 
 if __name__ == '__main__':
 
+	# argument parser
+	parser = argparse.ArgumentParser()
+	parser.add_argument( 'resultImageStoragePathStr', type=str, 
+		     			help='path to save result image' )
+	args = parser.parse_args()
+	resultImageStoragePathStr = os.getcwd() +  args.resultImageStoragePathStr
+	print( f'\n\n\n { resultImageStoragePathStr }' )
+
 	# create image plotter object
-	imagePlotter = ImagePlotter( 7, 7, 2, '/home/happymix/module89_chat/resultImageStorage' )
+	imagePlotter = ImagePlotter( 7, 7, 2, resultImageStoragePathStr )
 
 	# reading image
 	originalImage = cv2.imread( 'field_image_from_manual.png' )
