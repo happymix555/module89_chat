@@ -376,11 +376,15 @@ class Contour:
 		# this contour is circle contour, then
 		if self.shapeTypeStr == 'circle':
 
+			print( f'\n\n\n\n self.centerPointTuple[ 0 ] { self.centerPointTuple[ 0 ] }, self.centerPointTuple[ 1 ] { self.centerPointTuple[ 1 ] }, self.vectorLengthInt { self.vectorLengthInt } ' )
+
 			# x-axis component is the same direction with camera's x-axis
 			self.xAxisEndPointTuple = ( self.centerPointTuple[ 0 ] + self.vectorLengthInt, self.centerPointTuple[ 1 ] )
 
 			# y-axis component is the same direction with camera's y-axis
 			self.yAxisEndPointTuple = ( self.centerPointTuple[ 0 ], self.centerPointTuple[ 1 ] + self.vectorLengthInt )
+
+			print( f'\n\n\n\n [calculateCoordinateFrame] self.xAxisEndPointTuple { self.xAxisEndPointTuple }, self.yAxisEndPointTuple { self.yAxisEndPointTuple }' )
 
 		# this contour is triangle or square contour, then
 		# approximate polygon of contour

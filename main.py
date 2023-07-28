@@ -38,7 +38,6 @@ if __name__ == '__main__':
 		     			help='path to save result image' )
 	args = parser.parse_args()
 	resultImageStoragePathStr = os.getcwd() +  args.resultImageStoragePathStr
-	print( f'\n\n\n { resultImageStoragePathStr }' )
 
 	# create image plotter object
 	imagePlotter = ImagePlotter( 7, 7, 2, resultImageStoragePathStr )
@@ -146,8 +145,10 @@ if __name__ == '__main__':
 		# draw center point of contour
 		cv2.circle( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, 7, ( 255, 255, 255 ), -1)
 
+		print( f'\n\n\n\n circleContourObj.xAxisEndPointTuple {circleContourObj.xAxisEndPointTuple}, circleContourObj.yAxisEndPointTuple {circleContourObj.yAxisEndPointTuple}' )
+
 		# draw x-axis line of coordinate frame
-		# cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+		cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
 
 		# draw y-axis line of coordinate frame
 		cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)

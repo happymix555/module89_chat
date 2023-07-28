@@ -27,8 +27,6 @@ class Image:
 		''' save image to path
 		'''
 
-		print( f'\n\n\n image saved at { self.pathToSaveImageStr }' )
-
 		# save image 
 		cv2.imwrite( self.pathToSaveImageStr, self.image )
 
