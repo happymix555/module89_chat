@@ -134,7 +134,7 @@ if __name__ == '__main__':
 		cv2.circle( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, 7, ( 255, 255, 255 ), -1)
 
 		# draw x-axis line of coordinate frame
-		cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+		# cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
 
 		# draw y-axis line of coordinate frame
 		cv2.line( originalImageForDrawOuterMostCircleContour, circleContourObj.centerPointTuple, circleContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)
