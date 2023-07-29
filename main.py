@@ -155,7 +155,23 @@ if __name__ == '__main__':
 	imagePlotter.addImageToPlot( originalImageForDrawOuterMostCircleContour, 'outer most circle contour' )
 
 	# filter only outer most triangle contour object
-	contourStorageObj.outerMostTriangleContourObjList = contourStorageObj.filterOnlyOuterMostContourObj( contourStorageObj.triangleContourObjList, 5 )
+	contourStorageObj.outerMostTriangleContourObjList = contourStorageObj.filterOnlyOuterMostContourObj( contourStorageObj.triangleContourObjList, 5, returnDebugVariable=True )
+	
+	#############################################################################################################################################
+	
+	# loop through each outer most triangle contour object
+	for triangleContourObj in contourStorageObj.outerMostTriangleContourObjList:
+		approximatedPolygon1DList = triangleContourObj.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ]
+		twoNearestApproximatedPointTupleList = triangleContourObj.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ]
+		for point in approximatedPolygon1DList:
+			cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 0, 255, 255 ), -1)
+		# cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostTriangleContour )
+
+		for point in twoNearestApproximatedPointTupleList:
+			cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 255, 0, 255 ), -1)
+	cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostTriangleContour )
+
+	#############################################################################################################################################
 
 	# loop through each outer most triangle contour object
 	for triangleContourObj in contourStorageObj.outerMostTriangleContourObjList:
@@ -168,6 +184,9 @@ if __name__ == '__main__':
 
 		# draw x-axis line of coordinate frame
 		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+
+		# draw y-axis line of coordinate frame
+		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)
 
 	# add original image with outer most triangle contour to figure
 	imagePlotter.addImageToPlot( originalImageForDrawOuterMostTriangleContour, 'outer most triangle contour' )
@@ -183,6 +202,12 @@ if __name__ == '__main__':
 
 		# draw center point of contour
 		cv2.circle( originalImageForDrawOuterMostSquareContour, squareContourObj.centerPointTuple, 7, ( 255, 255, 255 ), -1)
+
+		# draw x-axis line of coordinate frame
+		cv2.line( originalImageForDrawOuterMostSquareContour, squareContourObj.centerPointTuple, squareContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+
+		# draw y-axis line of coordinate frame
+		cv2.line( originalImageForDrawOuterMostSquareContour, squareContourObj.centerPointTuple, squareContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)
 
 	# add original image with outer most square contour to figure
 	imagePlotter.addImageToPlot( originalImageForDrawOuterMostSquareContour, 'outer most square contour' )

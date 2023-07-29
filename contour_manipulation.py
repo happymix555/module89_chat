@@ -21,6 +21,14 @@ import math
 
 from helper import calculateVectorMagnitude
 
+#####################################################################################################
+#
+# Constants
+#
+#####################################################################################################
+OpenCVWorldCoordinateTuple = ( 0, 0 )
+
+
 class ContourStorage:
 	''' - store and manage contour object by its type
 
@@ -245,7 +253,7 @@ class ContourStorage:
 				contourObj.shapeTypeStr = 'square'
 				continue
 	
-	def filterOnlyOuterMostContourObj( self, contourObjList, epsilonPercent ):
+	def filterOnlyOuterMostContourObj( self, contourObjList, epsilonPercent, returnDebugVariable = False ):
 		''' - filter to get only the outer most contour obj from contour object list
 
 			ARGS: 
@@ -273,7 +281,7 @@ class ContourStorage:
 
 				# store it
 				outerMostContourObjList.append( contourObj )
-		
+
 		return outerMostContourObjList
 			
 class Contour:
@@ -309,6 +317,9 @@ class Contour:
 
 		# length of vector ( in pixel ) to draw contour's coordinate frame
 		self.vectorLengthInt = 50
+
+		# debug variable storage
+		self.debugVariableNameToValueDict = dict()
 
 	@property
 	def area( self ):
@@ -399,49 +410,33 @@ class Contour:
 			pointTuple = ( int( point[ 0 ][ 0 ] ), int( point[ 0 ][ 1 ] ) )
 
 			# store it
-			approximatedPolygon1DList.append( pointTuple )
+			approximatedPolygon1DList.append( pointTuple )	
 
-		# find two nearest points from OpenCV's world coordinate frame
-		# init vector's magnitude storage
-		vectorEndPointToVectorMagnitudeDict = dict()
+		print( '\n\n\n\n' )
+		print( approximatedPolygon1DList )
 
-		# loop through each point in approximated polygon
-		for point in  approximatedPolygon1DList:
+		# dictionary to store distance between approximated point to OpenCV's world coordinate frame ( 0, 0 )
+		approximatedPointToDistanceFromOpenCVCoordinateFrameDict = dict()
 
-			# calculate vector magnitude and store it
-			vectorEndPointToVectorMagnitudeDict[ point ] = calculateVectorMagnitude( ( 0, 0 ), point )
+		# loop through all approximated point 
+		for approximatedPoint in approximatedPolygon1DList:
 
-		# sort each point based on its vector's lenght
-		sortedVectorEndPointToVectorMagnitudeDict = dict( sorted( vectorEndPointToVectorMagnitudeDict.items(), key=lambda x: x[ 1 ] ) )
+			# find distance between OpenCV world coordinate frame ( 0, 0 ) and approximated point
+			distanceFromOpenCVWorldFrame = calculateVectorMagnitude( OpenCVWorldCoordinateTuple, approximatedPoint )
 
-		# get the most nearest point from OpenCV's world coordinate frame
-		theNearestPointFromWorldCoordinateTuple = list( sortedVectorEndPointToVectorMagnitudeDict.keys() )[ 0 ]
-
-		# get the secord nearest point from OpenCV's world coordinate frame
-		theSecordNearestPointFromWorldCoordinateTuple = list( sortedVectorEndPointToVectorMagnitudeDict.keys() )[ 1 ]
-
-		# find start point and end point of vector which is the same direction as contour's x-axis frame
-		# in this case, end point is the point with largest x component
-		if theNearestPointFromWorldCoordinateTuple[ 1 ] > theSecordNearestPointFromWorldCoordinateTuple[ 1 ]:
-			vectorWithTheSameDirectionAsYAxisTuple = ( theNearestPointFromWorldCoordinateTuple, theSecordNearestPointFromWorldCoordinateTuple )
-		vectorWithTheSameDirectionAsYAxisTuple = ( theSecordNearestPointFromWorldCoordinateTuple, theNearestPointFromWorldCoordinateTuple )
-	
-		# calculate directional vector
-		directionalVectorXAxisComponentInt = vectorWithTheSameDirectionAsYAxisTuple[ 1 ][ 0 ] - vectorWithTheSameDirectionAsYAxisTuple[ 0 ][ 0 ]
-		directionalVectorYAxisComponentInt = vectorWithTheSameDirectionAsYAxisTuple[ 1 ][ 1 ] - vectorWithTheSameDirectionAsYAxisTuple[ 0 ][ 1 ]
-		directionalVectorTuple = ( directionalVectorXAxisComponentInt, directionalVectorYAxisComponentInt )
-
-		# calculate directional vector magnitude
-		directionalVectorMagnitude = calculateVectorMagnitude( ( 0, 0 ), directionalVectorTuple )
+			# store calculated distance in form of dictionary mapping between approximated point to calculated distance
+			approximatedPointToDistanceFromOpenCVCoordinateFrameDict[ approximatedPoint ] = distanceFromOpenCVWorldFrame
 		
-		# normalize vector to obtain a unit vector
-		normalizedDirectionalVectorXAxisComponentFloat = directionalVectorXAxisComponentInt / directionalVectorMagnitude
-		normalizedDirectionalVectorYAxisComponentFloat = directionalVectorYAxisComponentInt / directionalVectorMagnitude
+		# sort items in ascending format based on its distance
+		sortedApproximatedPointTupleList = list( dict( sorted(approximatedPointToDistanceFromOpenCVCoordinateFrameDict.items(), key=lambda item: item[ 1 ] ) ).keys() )
 
-		# include size to the directional vector 
-		normalizedDirectionalVectorWithSpecificSizeTuple = ( self.vectorLengthInt * normalizedDirectionalVectorXAxisComponentFloat,
-															self.vectorLengthInt * normalizedDirectionalVectorYAxisComponentFloat )
-		
-		# find end point of contour's coordinate frame for x-axis vector
-		self.xAxisEndPointTuple = ( self.centerPointTuple[ 0 ] + int( normalizedDirectionalVectorWithSpecificSizeTuple[ 0 ] ), 
-			     					self.centerPointTuple[ 1 ] + int( normalizedDirectionalVectorWithSpecificSizeTuple[ 0 ] ) )
+		# get the nearest point
+		theNearestApproximatedPointTuple = sortedApproximatedPointTupleList[ 0 ]
+
+		# get the second nearest point
+		secondNearestApproximatedPointTuple = sortedApproximatedPointTupleList[ 1 ]
+
+		self.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ] = approximatedPolygon1DList
+		self.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ] = [ theNearestApproximatedPointTuple, secondNearestApproximatedPointTuple ]
+
+		return 
