@@ -414,9 +414,6 @@ class Contour:
 			# store it
 			approximatedPolygon1DList.append( pointTuple )	
 
-		print( '\n\n\n\n' )
-		print( approximatedPolygon1DList )
-
 		# dictionary to store distance between approximated point to OpenCV's world coordinate frame ( 0, 0 )
 		approximatedPointToDistanceFromOpenCVCoordinateFrameDict = dict()
 
