@@ -39,7 +39,7 @@ def calculateVectorMagnitude( vectorStartPointTuple, vectorEndPointTuple ):
 	# calculate the vector's magnitude
 	return math.sqrt( vectorMagnitudeFloat )
 
-def findParallelPointWithMagnitude(point1, point2, point3, magnitude):
+def findParallelPointWithMagnitude( point1, point2, point3, magnitude ):
     
     # Calculate the direction vector from point1 to point2
     directionVector = ( point2[ 0 ] - point1[ 0 ], point2[ 1 ] - point1[ 1 ] )
@@ -55,3 +55,27 @@ def findParallelPointWithMagnitude(point1, point2, point3, magnitude):
               int( point3[ 1 ] + directionVector[ 1 ] * scalingFactor ) )
 
     return point4
+
+def findPerpendicularPoint( point1, point2, point3, point4, magnitude ):
+   
+    # Calculate the direction vector from point1 to point2 (v1)
+    v1X = point2[ 0 ] - point1[ 0 ]
+    v1Y = point2[ 1 ] - point1[ 1 ]
+
+    # Calculate the direction vector from point3 to point4 (v2)
+    v2X = point4[ 0 ] - point3[ 0 ]
+    v2Y = point4[ 1 ] - point3[ 1 ]
+
+    # Calculate the perpendicular vector (v3)
+    v3X = -v2Y
+    v3Y = v2X
+
+    # Scale v3 to the desired magnitude
+    scalingFactor = magnitude / ( ( v3X ** 2 + v3Y ** 2 ) ** 0.5 )
+    v3X *= scalingFactor
+    v3Y *= scalingFactor
+
+    # Find point5 using v3 and point3
+    point5 = ( int( point3[ 0 ] + v3X ), int( point3[ 1 ] + v3Y ) )
+
+    return point5

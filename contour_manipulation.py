@@ -20,7 +20,8 @@ import math
 #####################################################################################################
 
 from helper import calculateVectorMagnitude, \
-					findParallelPointWithMagnitude
+					findParallelPointWithMagnitude, \
+					findPerpendicularPoint
 
 #####################################################################################################
 #
@@ -447,6 +448,8 @@ class Contour:
 		# find x-axis component of contour's coordinate frame
 		self.xAxisEndPointTuple = findParallelPointWithMagnitude( xAxisDirecctionalVectorStartPointTuple, xAxisDirectionalVectorEndPointTuple, self.centerPointTuple, self.vectorLengthInt )
 
+		# find y-axis componrnt of contour's coordinate frame
+		self.yAxisEndPointTuple = findPerpendicularPoint( xAxisDirecctionalVectorStartPointTuple, xAxisDirectionalVectorEndPointTuple, self.centerPointTuple, self.xAxisEndPointTuple, self.vectorLengthInt )
 		self.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ] = approximatedPolygon1DList
 		self.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ] = [ theNearestApproximatedPointTuple, secondNearestApproximatedPointTuple ]
 		self.debugVariableNameToValueDict[ 'xAxisDirecctionalVectorStartPointTuple' ] = xAxisDirecctionalVectorStartPointTuple

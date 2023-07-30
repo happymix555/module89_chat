@@ -174,7 +174,29 @@ if __name__ == '__main__':
 		cv2.circle( originalImageForDrawOuterMostTriangleContour, xAxisDirecctionalVectorStartPointTuple, 7, ( 0, 255, 255 ), -1)
 		cv2.circle( originalImageForDrawOuterMostTriangleContour, xAxisDirectionalVectorEndPointTuple, 7, ( 255, 0, 255 ), -1)
 		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)
 	cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostTriangleContour )
+	
+
+	# filter only outer most square contour object
+	contourStorageObj.outerMostSquareContourObjList = contourStorageObj.filterOnlyOuterMostContourObj( contourStorageObj.squareContourObjList, 4 )
+	# loop through each outer most square contour object
+	for squareContourObj in contourStorageObj.outerMostSquareContourObjList:
+		approximatedPolygon1DList = squareContourObj.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ]
+		twoNearestApproximatedPointTupleList = squareContourObj.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ]
+		xAxisDirecctionalVectorStartPointTuple = squareContourObj.debugVariableNameToValueDict[ 'xAxisDirecctionalVectorStartPointTuple' ]
+		xAxisDirectionalVectorEndPointTuple = squareContourObj.debugVariableNameToValueDict[ 'xAxisDirectionalVectorEndPointTuple' ]
+		# for point in approximatedPolygon1DList:
+		# 	cv2.circle( originalImageForDrawOuterMostSquareContour, point, 7, ( 0, 255, 255 ), -1)
+		# cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostSquareContour )
+
+		# for point in twoNearestApproximatedPointTupleList:
+		# 	cv2.circle( originalImageForDrawOuterMostSquareContour, point, 7, ( 255, 0, 255 ), -1)
+		cv2.circle( originalImageForDrawOuterMostSquareContour, xAxisDirecctionalVectorStartPointTuple, 7, ( 0, 255, 255 ), -1)
+		cv2.circle( originalImageForDrawOuterMostSquareContour, xAxisDirectionalVectorEndPointTuple, 7, ( 255, 0, 255 ), -1)
+		cv2.line( originalImageForDrawOuterMostSquareContour, squareContourObj.centerPointTuple, squareContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
+		cv2.line( originalImageForDrawOuterMostSquareContour, squareContourObj.centerPointTuple, squareContourObj.yAxisEndPointTuple, ( 0, 255, 0 ), 3)
+	cv2.imwrite( '/home/happymix/module89_chat/debugImage/square_debug.jpg', originalImageForDrawOuterMostSquareContour )
 
 	#############################################################################################################################################
 
