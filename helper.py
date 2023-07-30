@@ -38,3 +38,20 @@ def calculateVectorMagnitude( vectorStartPointTuple, vectorEndPointTuple ):
 
 	# calculate the vector's magnitude
 	return math.sqrt( vectorMagnitudeFloat )
+
+def findParallelPointWithMagnitude(point1, point2, point3, magnitude):
+    
+    # Calculate the direction vector from point1 to point2
+    directionVector = ( point2[ 0 ] - point1[ 0 ], point2[ 1 ] - point1[ 1 ] )
+
+    # Calculate the magnitude of the direction vector
+    directionMagnitude = ( directionVector[ 0 ] ** 2 + directionVector[ 1 ] ** 2) ** 0.5
+
+    # Calculate the scaling factor to achieve the desired magnitude
+    scalingFactor = magnitude / directionMagnitude
+
+    # Find the end point point4
+    point4 = ( int( point3[ 0 ] + directionVector[ 0 ] * scalingFactor ),
+              int( point3[ 1 ] + directionVector[ 1 ] * scalingFactor ) )
+
+    return point4

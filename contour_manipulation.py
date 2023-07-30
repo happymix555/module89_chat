@@ -19,7 +19,8 @@ import math
 #
 #####################################################################################################
 
-from helper import calculateVectorMagnitude
+from helper import calculateVectorMagnitude, \
+					findParallelPointWithMagnitude
 
 #####################################################################################################
 #
@@ -436,7 +437,19 @@ class Contour:
 		# get the second nearest point
 		secondNearestApproximatedPointTuple = sortedApproximatedPointTupleList[ 1 ]
 
+		# determine x-axis's direction vector end point
+		xAxisDirectionalVectorEndPointTuple = secondNearestApproximatedPointTuple
+		xAxisDirecctionalVectorStartPointTuple = theNearestApproximatedPointTuple
+		if theNearestApproximatedPointTuple[ 0 ] > secondNearestApproximatedPointTuple[ 0 ]:
+			xAxisDirectionalVectorEndPointTuple = theNearestApproximatedPointTuple
+			xAxisDirecctionalVectorStartPointTuple = secondNearestApproximatedPointTuple
+
+		# find x-axis component of contour's coordinate frame
+		self.xAxisEndPointTuple = findParallelPointWithMagnitude( xAxisDirecctionalVectorStartPointTuple, xAxisDirectionalVectorEndPointTuple, self.centerPointTuple, self.vectorLengthInt )
+
 		self.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ] = approximatedPolygon1DList
 		self.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ] = [ theNearestApproximatedPointTuple, secondNearestApproximatedPointTuple ]
+		self.debugVariableNameToValueDict[ 'xAxisDirecctionalVectorStartPointTuple' ] = xAxisDirecctionalVectorStartPointTuple
+		self.debugVariableNameToValueDict[ 'xAxisDirectionalVectorEndPointTuple' ] = xAxisDirectionalVectorEndPointTuple
 
 		return 

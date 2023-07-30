@@ -163,12 +163,17 @@ if __name__ == '__main__':
 	for triangleContourObj in contourStorageObj.outerMostTriangleContourObjList:
 		approximatedPolygon1DList = triangleContourObj.debugVariableNameToValueDict[ 'approximatedPolygon1DList' ]
 		twoNearestApproximatedPointTupleList = triangleContourObj.debugVariableNameToValueDict[ 'twoNearestPointTupleList' ]
-		for point in approximatedPolygon1DList:
-			cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 0, 255, 255 ), -1)
+		xAxisDirecctionalVectorStartPointTuple = triangleContourObj.debugVariableNameToValueDict[ 'xAxisDirecctionalVectorStartPointTuple' ]
+		xAxisDirectionalVectorEndPointTuple = triangleContourObj.debugVariableNameToValueDict[ 'xAxisDirectionalVectorEndPointTuple' ]
+		# for point in approximatedPolygon1DList:
+		# 	cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 0, 255, 255 ), -1)
 		# cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostTriangleContour )
 
-		for point in twoNearestApproximatedPointTupleList:
-			cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 255, 0, 255 ), -1)
+		# for point in twoNearestApproximatedPointTupleList:
+		# 	cv2.circle( originalImageForDrawOuterMostTriangleContour, point, 7, ( 255, 0, 255 ), -1)
+		cv2.circle( originalImageForDrawOuterMostTriangleContour, xAxisDirecctionalVectorStartPointTuple, 7, ( 0, 255, 255 ), -1)
+		cv2.circle( originalImageForDrawOuterMostTriangleContour, xAxisDirectionalVectorEndPointTuple, 7, ( 255, 0, 255 ), -1)
+		cv2.line( originalImageForDrawOuterMostTriangleContour, triangleContourObj.centerPointTuple, triangleContourObj.xAxisEndPointTuple, ( 0, 0, 255 ), 3)
 	cv2.imwrite( '/home/happymix/module89_chat/debugImage/triangle_debug.jpg', originalImageForDrawOuterMostTriangleContour )
 
 	#############################################################################################################################################
